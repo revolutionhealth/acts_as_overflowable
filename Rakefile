@@ -4,13 +4,8 @@ require 'rubygems/specification'
 require 'date'
 require 'test/unit'
 
-## this svn stuff is optional - you dont need it if you use github
-match = `svn info`.match(/Revision: (\d+)/)
-revision = ENV['revision'] ||= (match[1] if match) || 0
-##################################################################
-
 GEM = "acts_as_overflowable"
-GEM_VERSION = "2.0.#{revision}"
+GEM_VERSION = "2.0.0"
 AUTHOR = "Revolution Health"
 EMAIL = "rails@revolutionhealth.com"
 HOMEPAGE = "http://"
