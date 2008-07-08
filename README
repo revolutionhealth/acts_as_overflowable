@@ -1,4 +1,4 @@
 acts_as_overflowable
 ====================
 
-A gem that provides...
+A gem that allows a column to overflow data into a secondary column if the data size exceeds the character limit. This is useful for fast indexing.
