@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Revolution Health"]
   s.autorequire = %q{acts_as_overflowable}
-  s.date = %q{2008-07-08}
+  s.date = %q{2008-07-09}
   s.description = %q{A gem that allows a column to overflow data into a secondary column if the data size exceeds the character limit.  This is useful for fast indexing.}
   s.email = %q{rails@revolutionhealth.com}
   s.extra_rdoc_files = ["README", "TODO"]
