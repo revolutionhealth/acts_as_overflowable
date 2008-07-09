@@ -1,4 +1,103 @@
-acts_as_overflowable
-====================
+= acts_as_overflowable
+ 
+http://revolutiononrails.blogspot.com/
+ 
+== DESCRIPTION:
+ 
+Allows a column to overflow data into a secondary column if the data size exceeds 
+the character limit. This is useful for fast indexing.
 
-A gem that allows a column to overflow data into a secondary column if the data size exceeds the character limit. This is useful for fast indexing.
+Instead of trying to index text blobs, you can specify a varchar column to be used 
+for indexing.  Any characters that do not fit into the base column will be 
+automatically saved into or retrieved from an overflow field.
+ 
+== FEATURES/PROBLEMS:
+ 
+* Only tested on mysql and sqlite3
+ 
+ 
+== SYNOPSIS:
+ 
+ 
+Create overflow column migration:
+ 
+ class CreateOverflowModels < ActiveRecord::Migration
+   def self.up     
+     create_table :overflows do |t|
+       t.integer :overflowable_id
+       t.string :overflowable_type
+       t.string :overflow
+       t.timestamps
+     end
+
+     add_column(:my_class_that_uses_overflows, :has_overflow, :boolean)
+     add_column(:my_class_that_uses_overflows, :overflowable_text, :string, :limit => 255)
+   end
+ 
+   def self.down
+     drop_table :overflows
+
+     remove_column(:my_class_that_uses_overflows, :has_overflow)
+     remove_column(:my_class_that_uses_overflows, :overflowable_text)
+   end
+ end
+
+  
+ 
+ 
+Add to model:
+ 
+ class MyClassThatUsesOverflow < ActiveRecord::Base
+   acts_as_overflowable :overflow_column => :overflowable_text, 
+                        :overflow_limit => 255,
+                        :overflow_indicator => :has_overflow,
+                        :overflow_table => :overflows
+ end
+ 
+ 
+To get and set the value of the "overflowable_text" field as described in the test model, 
+use:
+  # #{my_field_name_here}_with_overflow is the method name
+  long_text = overflowable_obj.overflowable_text_with_overflow
+
+  overflowable_obj.overflowable_text_with_overflow = very_long_text
+
+
+Simply using the getters and setters for "overflowable_text" without appending 
+"_with_overflow" to the method name will return the fragment of the text contained in 
+the base column.
+ 
+ 
+ 
+== REQUIREMENTS:
+ 
+ 
+== INSTALL:
+ 
+* sudo gem install revolutionhealth-acts_as_overflowable -s http://gems.github.com
+ 
+ 
+== LICENSE:
+ 
+(The MIT License)
+ 
+Copyright (c) 2008 Revolution Health Group LLC
+ 
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+ 
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+ 
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
