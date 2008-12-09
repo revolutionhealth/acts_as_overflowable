@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{acts_as_overflowable}
-  s.version = "2.0.0"
+  s.version = "2.0.1"
 
   s.specification_version = 2 if s.respond_to? :specification_version=
 
