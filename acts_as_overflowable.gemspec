@@ -18,5 +18,4 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.0.1}
   s.summary = %q{A gem that allows a column to overflow data into a secondary column if the data size exceeds the character limit.  This is useful for fast indexing.}
 
-  s.add_dependency(%q<activerecord>, ["~> 2.0"])
 end
